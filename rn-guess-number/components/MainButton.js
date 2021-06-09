@@ -1,30 +1,29 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Colors from "../constants/colors";
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const MainButton = (props) => {
+import Colors from '../constants/colors';
+
+const MainButton = props => {
   return (
-    <TouchableOpacity onPress={props.onPress}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>{props.children}</Text>
+    <TouchableOpacity activeOpacity={0.6} onPress={props.onPress}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{props.children}</Text>
       </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    width: 100,
-    height: 40,
+  button: {
     backgroundColor: Colors.primary,
-    borderRadius: 25,
-    alignItems: "center",
-    justifyContent: "center"
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 25
   },
-  title: {
-    fontFamily: "open-sans",
-    fontSize: 15,
-    color: "white"
+  buttonText: {
+    color: 'white',
+    fontFamily: 'open-sans',
+    fontSize: 18
   }
 });
 
