@@ -1,10 +1,10 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
-const FavoritesScreen = (props) => {
+const FavoritesScreen = props => {
   return (
     <View style={styles.screen}>
-      <Text>Favorites Screen!</Text>
+      <Text>The Favorites Screen!</Text>
     </View>
   );
 };
@@ -12,8 +12,8 @@ const FavoritesScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
