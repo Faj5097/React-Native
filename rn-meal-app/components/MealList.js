@@ -1,5 +1,6 @@
 import React from "react";
 import { View, FlatList, StyleSheet } from "react-native";
+
 import MealItem from "./MealItem";
 
 const MealList = (props) => {
@@ -24,9 +25,9 @@ const MealList = (props) => {
   };
 
   return (
-    <View style={styles.screen}>
+    <View style={styles.list}>
       <FlatList
-        data={props.data}
+        data={props.listData}
         keyExtractor={(item, index) => item.id}
         renderItem={renderMealItem}
         style={{ width: "100%" }}
@@ -36,7 +37,7 @@ const MealList = (props) => {
 };
 
 const styles = StyleSheet.create({
-  screen: {
+  list: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
