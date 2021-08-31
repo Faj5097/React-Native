@@ -63,7 +63,7 @@ export default (state = initialState, action) => {
       if (!state.items[action.pid]) {
         return state;
       }
-      const updatedCartItems = { ...state.items };
+      updatedCartItems = { ...state.items };
       delete updatedCartItems[action.pid];
       const totalAmountItem = state.items[action.pid].sum;
 
