@@ -57,7 +57,7 @@ const OrdersNavigator = createStackNavigator(
   }
 );
 
-const UserProductsNavigator = createStackNavigator(
+const AdminNavigator = createStackNavigator(
   {
     UserProducts: UserProductScreen
   },
@@ -65,7 +65,7 @@ const UserProductsNavigator = createStackNavigator(
     navigationOptions: {
       drawerIcon: (drawerConfig) => (
         <Ionicons
-          name={Platform.OS === "android" ? "md-list" : "ios-list"}
+          name={Platform.OS === "android" ? "md-create" : "ios-create"}
           size={23}
           color={drawerConfig.tintColor}
         />
@@ -79,7 +79,7 @@ const ShopNavigator = createDrawerNavigator(
   {
     Products: ProductsNavigator,
     Orders: OrdersNavigator,
-    UserProducts: UserProductsNavigator
+    UserProducts: AdminNavigator
   },
   {
     contentOptions: {

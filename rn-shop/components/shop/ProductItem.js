@@ -1,33 +1,37 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity, TouchableNativeFeedback, Platform, StyleSheet, Button } from "react-native";
-import Colors from "../../constants/Colors";
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  Platform,
+  StyleSheet
+} from "react-native";
 
 const ProductItem = (props) => {
   let TouchableCmp = TouchableOpacity;
 
-  if (Platform.OS === "android" && Platform.Version >= 21){
+  if (Platform.OS === "android" && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
 
   return (
     <View style={styles.product}>
-    <View style={styles.touchable}>
-    <TouchableCmp onPress={props.onViewDetail} useForeground>
-    <View>
-    <View style={styles.imageContainer}>
-      <Image source={{ uri: props.image }} style={styles.image} />
-    </View>
-      <View style={styles.details}>
-        <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+      <View style={styles.touchable}>
+        <TouchableCmp onPress={props.onSelect} useForeground>
+          <View>
+            <View style={styles.imageContainer}>
+              <Image source={{ uri: props.image }} style={styles.image} />
+            </View>
+            <View style={styles.details}>
+              <Text style={styles.title}>{props.title}</Text>
+              <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+            </View>
+            <View style={styles.actions}>{props.children}</View>
+          </View>
+        </TouchableCmp>
       </View>
-      <View style={styles.actions}>
-        <Button color={Colors.primary} title="View Details" onPress={props.onViewDetail} />
-        <Button color={Colors.primary} title="To Cart" onPress={props.onAddToCart} />
-      </View>
-    </View>
-    </TouchableCmp>
-    </View>
     </View>
   );
 };
@@ -42,7 +46,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "white",
     height: 300,
-    margin: 20,
+    margin: 20
   },
   touchable: {
     borderRadius: 10,
