@@ -34,7 +34,7 @@ const EditProductScreen = (props) => {
     dispatch(
       productsActions.createProduct(title, description, imageUrl, +price)
     );
-  }, [dispatch, prodId, title, imageUrl, price, description]);
+  }, [dispatch, title, description, imageUrl, price]);
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
@@ -48,7 +48,7 @@ const EditProductScreen = (props) => {
           <TextInput
             value={title}
             onChange={(text) => {
-              setTitle(text);
+              setTitle(text.nativeEvent.text);
             }}
             style={styles.input}
           />
@@ -58,7 +58,7 @@ const EditProductScreen = (props) => {
           <TextInput
             value={imageUrl}
             onChange={(text) => {
-              setImageUrl(text);
+              setImageUrl(text.nativeEvent.text);
             }}
             style={styles.input}
           />
@@ -69,7 +69,7 @@ const EditProductScreen = (props) => {
             <TextInput
               value={price}
               onChange={(text) => {
-                setPrice(text);
+                setPrice(text.nativeEvent.text);
               }}
               style={styles.input}
             />
@@ -80,7 +80,7 @@ const EditProductScreen = (props) => {
           <TextInput
             value={description}
             onChange={(text) => {
-              setDescription(text);
+              setDescription(text.nativeEvent.text);
             }}
             style={styles.input}
           />

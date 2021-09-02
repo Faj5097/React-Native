@@ -22,6 +22,14 @@ export default (state = initialState, action) => {
         action.productData.description,
         action.productData.price
       );
+      // const newProduct = new Product(
+      //   Date.now().toString(),
+      //   "u1",
+      //   "CHOW CHOW",
+      //   "https://www.edogs.de/magazin/wp-content/uploads/chow-chow-bewegung-1.jpg",
+      //   "Besten Hunde",
+      //   1000
+      // );
       return {
         ...state,
         availableProducts: state.availableProducts.concat(newProduct),
