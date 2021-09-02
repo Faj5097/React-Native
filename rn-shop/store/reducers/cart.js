@@ -74,14 +74,14 @@ export default (state = initialState, action) => {
         totalAmount: state.totalAmount - totalAmountItem
       };
     case UPDATE_PRODUCT:
-      if (!state.items[action.product.id]) {
+      if (!state.items[action.pid]) {
         return state;
       }
       updatedCartItems = { ...state.items };
-      updatedCartItems[action.product.id].title = action.product.title;
-      updatedCartItems[action.product.id].imageUrl = action.product.imageUrl;
-      updatedCartItems[action.product.id].description =
-        action.product.description;
+      updatedCartItems[action.pid].title = action.productData.title;
+      updatedCartItems[action.pid].imageUrl = action.productData.imageUrl;
+      updatedCartItems[action.pid].description =
+        action.productData.description;
 
       return {
         ...state,

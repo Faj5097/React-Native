@@ -29,12 +29,19 @@ const EditProductScreen = (props) => {
   const [description, setDescription] = useState(
     editedProduct ? editedProduct.description : ""
   );
-
+  
   const submitHandler = useCallback(() => {
-    dispatch(
-      productsActions.createProduct(title, description, imageUrl, +price)
-    );
-  }, [dispatch, title, description, imageUrl, price]);
+    if (editedProduct) {
+      dispatch(
+        productsActions.updateProduct(prodId, title, description, imageUrl)
+      );
+    } else {
+      dispatch(
+        productsActions.createProduct(title, description, imageUrl, +price)
+      );
+    }
+    props.navigation.goBack();
+  }, [dispatch, prodId, title, description, imageUrl, price]); 
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
