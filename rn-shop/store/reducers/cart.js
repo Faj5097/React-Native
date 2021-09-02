@@ -3,6 +3,7 @@ import { ADD_TO_CART } from "../actions/cart";
 import { REMOVE_FROM_CART } from "../actions/cart";
 import { ADD_ORDER } from "../actions/orders";
 import { DELETE_PRODUCT } from "../actions/products";
+import { UPDATE_PRODUCT } from "../actions/products";
 
 const initialState = {
   items: {},
@@ -71,6 +72,20 @@ export default (state = initialState, action) => {
         ...state,
         items: updatedCartItems,
         totalAmount: state.totalAmount - totalAmountItem
+      };
+    case UPDATE_PRODUCT:
+      if (!state.items[action.product.id]) {
+        return state;
+      }
+      updatedCartItems = { ...state.items };
+      updatedCartItems[action.product.id].title = action.product.title;
+      updatedCartItems[action.product.id].imageUrl = action.product.imageUrl;
+      updatedCartItems[action.product.id].description =
+        action.product.description;
+
+      return {
+        ...state,
+        items: updatedCartItems
       };
     default:
       break;

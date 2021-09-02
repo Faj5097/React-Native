@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   details: {
-    height: "15%",
+    height: "17%",
     alignItems: "center",
     padding: 10
   },
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    height: "25%",
+    height: "23%",
     paddingHorizontal: 20
   }
 });
