@@ -29,7 +29,7 @@ const EditProductScreen = (props) => {
   const [description, setDescription] = useState(
     editedProduct ? editedProduct.description : ""
   );
-  
+
   const submitHandler = useCallback(() => {
     if (editedProduct) {
       dispatch(
