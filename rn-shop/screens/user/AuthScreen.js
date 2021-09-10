@@ -1,11 +1,13 @@
-import React, { useState, useReducer, useCallback } from "react";
+import React, { useState, useReducer, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   View,
   ScrollView,
   Button,
   StyleSheet,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ActivityIndicator,
+  Alert
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -40,6 +42,8 @@ const formReducer = (state, action) => {
 };
 
 const AuthScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
   const [isSignUp, setIsSignUp] = useState(false);
   const dispatch = useDispatch();
 
@@ -55,7 +59,7 @@ const AuthScreen = (props) => {
     formIsValid: false
   });
 
-  const authHandler = () => {
+  const authHandler = async () => {
     let action;
 
     if (isSignUp) {
@@ -69,7 +73,14 @@ const AuthScreen = (props) => {
         formState.inputValues.password
       );
     }
-    dispatch(action);
+    setError(null);
+    setIsLoading(true);
+    try {
+      await dispatch(action);
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
   };
 
   const inputChangeHandler = useCallback(
@@ -83,6 +94,12 @@ const AuthScreen = (props) => {
     },
     [dispatchFormState]
   );
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert("Error occurred!", error, [{ title: "Okay" }]);
+    }
+  }, [error]);
 
   return (
     <KeyboardAvoidingView
@@ -117,11 +134,15 @@ const AuthScreen = (props) => {
               errorText="Enter valid Password!"
             />
             <View style={styles.buttonContainer}>
-              <Button
-                title={isSignUp ? "Sign Up" : "Login"}
-                color={Colors.primary}
-                onPress={authHandler}
-              />
+              {isLoading ? (
+                <ActivityIndicator size="small" color={Colors.primary} />
+              ) : (
+                <Button
+                  title={isSignUp ? "Sign Up" : "Login"}
+                  color={Colors.primary}
+                  onPress={authHandler}
+                />
+              )}
             </View>
             <View style={styles.buttonContainer}>
               <Button
