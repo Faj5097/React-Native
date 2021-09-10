@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from "react";
+import React, { useState, useReducer, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import {
   View,
@@ -40,6 +40,7 @@ const formReducer = (state, action) => {
 };
 
 const AuthScreen = (props) => {
+  const [isSignUp, setIsSignUp] = useState(false);
   const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -54,13 +55,21 @@ const AuthScreen = (props) => {
     formIsValid: false
   });
 
-  const signUpHandler = () => {
-    dispatch(
-      authActions.signup(
+  const authHandler = () => {
+    let action;
+
+    if (isSignUp) {
+      action = authActions.signup(
         formState.inputValues.email,
         formState.inputValues.password
-      )
-    );
+      );
+    } else {
+      action = authActions.login(
+        formState.inputValues.email,
+        formState.inputValues.password
+      );
+    }
+    dispatch(action);
   };
 
   const inputChangeHandler = useCallback(
@@ -109,16 +118,18 @@ const AuthScreen = (props) => {
             />
             <View style={styles.buttonContainer}>
               <Button
-                title="Login"
+                title={isSignUp ? "Sign Up" : "Login"}
                 color={Colors.primary}
-                onPress={signUpHandler}
+                onPress={authHandler}
               />
             </View>
             <View style={styles.buttonContainer}>
               <Button
-                title="Switch to SignUp"
+                title={`Switch to ${isSignUp ? "Login" : "Sign Up"}`}
                 color={Colors.accent}
-                onPress={() => {}}
+                onPress={() => {
+                  setIsSignUp((prevState) => !prevState);
+                }}
               />
             </View>
           </ScrollView>
