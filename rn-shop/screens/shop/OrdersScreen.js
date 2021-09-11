@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useCallback} from "react";
-import { FlatList, Text, Platform } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { View, FlatList, Text, Platform } from "react-native";
 import { useDispatch } from "react-redux";
 
 import { useSelector } from "react-redux";
@@ -14,7 +14,15 @@ const OrdersScreen = (props) => {
 
   useEffect(() => {
     dispatch(orderActions.fetchOrders());
-  }, [dispatch])
+  }, [dispatch]);
+
+  if (orders.length === 0) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text>No orders, please buy something!</Text>
+      </View>
+    );
+  }
 
   return (
     <FlatList
