@@ -15,6 +15,7 @@ import Colors from "../constants/Colors";
 
 const NewPlaceScreen = (props) => {
   const [titleValue, setTitleValue] = useState("");
+  const [image, setImage] = useState();
 
   const dispatch = useDispatch();
 
@@ -22,8 +23,12 @@ const NewPlaceScreen = (props) => {
     setTitleValue(text);
   };
 
+  const imageTakenHandler = (imageUri) => {
+    setImage(imageUri);
+  };
+
   const savePlaceHandler = () => {
-    dispatch(placesActions.addPlace(titleValue));
+    dispatch(placesActions.addPlace(titleValue, image));
     props.navigation.goBack();
   };
 
@@ -36,7 +41,7 @@ const NewPlaceScreen = (props) => {
           onChangeText={titleChangeHandler}
           value={titleValue}
         />
-        <ImagePicker />
+        <ImagePicker onImageTaken={imageTakenHandler} />
         <Button
           title="Submit"
           color={Colors.primary}
