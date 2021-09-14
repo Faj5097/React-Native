@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ScrollView,
   View,
@@ -13,10 +13,12 @@ import * as placesActions from "../store/places-actions";
 import ImagePicker from "../components/ImagePicker";
 import LocationPicker from "../components/LocationPicker";
 import Colors from "../constants/Colors";
+import { hasStartedLocationUpdatesAsync } from "expo-location";
 
 const NewPlaceScreen = (props) => {
   const [titleValue, setTitleValue] = useState("");
   const [image, setImage] = useState();
+  const [location, setLocation] = useState();
 
   const dispatch = useDispatch();
 
@@ -28,8 +30,12 @@ const NewPlaceScreen = (props) => {
     setImage(imageUri);
   };
 
+  const onLocationHandler = useCallback((location) => {
+    setLocation(location);
+  }, []);
+
   const savePlaceHandler = () => {
-    dispatch(placesActions.addPlace(titleValue, image));
+    dispatch(placesActions.addPlace(titleValue, image, location));
     props.navigation.goBack();
   };
 
@@ -43,7 +49,10 @@ const NewPlaceScreen = (props) => {
           value={titleValue}
         />
         <ImagePicker onImageTaken={imageTakenHandler} />
-        <LocationPicker navigation={props.navigation} />
+        <LocationPicker
+          navigation={props.navigation}
+          onLocationHandler={onLocationHandler}
+        />
         <Button
           title="Submit"
           color={Colors.primary}
