@@ -1,8 +1,9 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Button, View } from "react-native";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
+import { addPushTokenListener } from "expo-notifications";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -14,6 +15,8 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
+  const [pushToken, setPushToken] = useState();
+
   useEffect(() => {
     Permissions.getAsync(Permissions.NOTIFICATIONS)
       .then((statusObj) => {
@@ -24,21 +27,46 @@ export default function App() {
       })
       .then((statusObj) => {
         if (statusObj.status !== "granted") {
-          return;
+          throw new Error("Permission missing!");
         }
+      })
+      .then(() => {
+        return Notifications.getExpoPushTokenAsync();
+      })
+      .then((response) => {
+        const token = response.data;
+        setPushToken(token);
+      })
+      .catch((err) => {
+        return null;
       });
   }, []);
 
   const triggerNotificationHandler = () => {
     //Schedule a local Notification
-    Notifications.scheduleNotificationAsync({
-      content: {
-        title: "My first local notification!",
-        body: "This is the first local notification we are sending!"
+    // Notifications.scheduleNotificationAsync({
+    //   content: {
+    //     title: "My first local notification!",
+    //     body: "This is the first local notification we are sending!"
+    //   },
+    //   trigger: {
+    //     seconds: 10
+    //   }
+    // });
+
+    fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-type": "application/json"
       },
-      trigger: {
-        seconds: 10
-      }
+      body: JSON.stringify({
+        to: pushToken,
+        data: { extraData: "Some Data" },
+        title: "Sent via the app!",
+        body: "This is a push notification ma Homie!"
+      })
     });
   };
 
